@@ -104,7 +104,7 @@ const Map = () => {
               const isComplete = expedition.endTime <= Date.now();
               
               return (
-                <div key={expedition.id} className="card border">
+                <div key={`active-${expedition.id}-${expedition.endTime}`} className="card border">
                   <div className="flex justify-between items-start">
                     <div>
                       <div className="flex items-center gap-2">
@@ -147,7 +147,7 @@ const Map = () => {
           <div className="space-y-3">
             {availableExpeditions.map((expedition) => (
               <div 
-                key={expedition.id} 
+                key={`available-${expedition.id}`} 
                 className={`card border cursor-pointer transition-all ${
                   selectedExpedition?.id === expedition.id
                     ? "border-primary border-2"

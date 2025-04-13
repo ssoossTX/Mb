@@ -298,13 +298,25 @@ const Profile = () => {
                 
                 <div className="mt-3 text-xs">
                   <span className="font-medium">Текущий бонус: </span>
-                  <span>{skill.getCurrentBonus()}</span>
+                  <span>
+                    {skillId === 'clickEfficiency' && `+${skill.level * 5}% к силе клика`}
+                    {skillId === 'autoClickEfficiency' && `+${skill.level * 10}% к силе автоклика`}
+                    {skillId === 'diamondFinder' && `+${skill.level * 5}% к получаемым алмазам`}
+                    {skillId === 'expeditionMaster' && `+${skill.level * 5}% к скорости экспедиций`}
+                    {skillId === 'dungeonFighter' && `+${skill.level * 10}% к урону в подземельях`}
+                  </span>
                 </div>
                 
                 {skill.level < skill.maxLevel && (
                   <div className="mt-1 text-xs text-primary">
                     <span className="font-medium">Следующий уровень: </span>
-                    <span>{skill.getNextBonus()}</span>
+                    <span>
+                      {skillId === 'clickEfficiency' && `+${(skill.level + 1) * 5}% к силе клика`}
+                      {skillId === 'autoClickEfficiency' && `+${(skill.level + 1) * 10}% к силе автоклика`}
+                      {skillId === 'diamondFinder' && `+${(skill.level + 1) * 5}% к получаемым алмазам`}
+                      {skillId === 'expeditionMaster' && `+${(skill.level + 1) * 5}% к скорости экспедиций`}
+                      {skillId === 'dungeonFighter' && `+${(skill.level + 1) * 10}% к урону в подземельях`}
+                    </span>
                   </div>
                 )}
               </div>
