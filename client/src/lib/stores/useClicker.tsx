@@ -288,34 +288,43 @@ export const useClicker = create<ClickerState>((set, get) => ({
   
   // Методы обработки состояния
   selectClass: (classType) => {
-    set((state) => {
-      // Определяем начальные бонусы класса
-      let clickPower = state.clickPower;
-      let diamonds = state.diamonds;
-      
-      // Применяем бонусы выбранного класса
-      switch (classType) {
-        case "warrior":
-          // Воин получает +5 к начальной силе клика
-          clickPower += 5;
-          break;
-        case "explorer":
-          // Исследователь начинает с открытой экспедицией
-          // (это будет реализовано в другом месте)
-          break;
-        case "merchant":
-          // Торговец начинает с +50 алмазами
-          diamonds += 50;
-          break;
-      }
-      
-      return {
-        selectedClass: classType,
-        hasSelectedClass: true,
-        clickPower,
-        diamonds
-      };
+    console.log("useClicker.selectClass вызван с классом:", classType);
+    
+    // Определяем начальные бонусы класса для выбранного класса
+    let newClickPower = 1; // Базовое значение
+    let newDiamonds = 0;   // Базовое значение
+    
+    // Применяем бонусы выбранного класса
+    switch (classType) {
+      case "warrior":
+        console.log("Применение бонусов для воина");
+        // Воин получает +5 к начальной силе клика
+        newClickPower += 5;
+        break;
+      case "explorer":
+        console.log("Применение бонусов для исследователя");
+        // Исследователь начинает с открытой экспедицией
+        // (это будет реализовано в другом месте)
+        break;
+      case "merchant":
+        console.log("Применение бонусов для торговца");
+        // Торговец начинает с +50 алмазами
+        newDiamonds = 50;
+        break;
+    }
+    
+    // Устанавливаем новое состояние напрямую, без использования предыдущего состояния
+    set({
+      selectedClass: classType,
+      hasSelectedClass: true,
+      clickPower: newClickPower,
+      diamonds: newDiamonds
     });
+    
+    console.log("useClicker.selectClass: класс установлен, новое состояние:", 
+      useClicker.getState().selectedClass, 
+      useClicker.getState().hasSelectedClass
+    );
   },
   
   addClicks: (amount) => {
