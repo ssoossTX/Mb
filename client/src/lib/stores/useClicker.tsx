@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { formatDistanceToNow } from "date-fns";
 import { ru } from "date-fns/locale";
-import { artifacts, skins, treasureChests, expeditions } from "../gameData";
+import { artifacts, skins, treasureChests, expeditions, dungeons } from "../gameData";
 
 export type ClassType = "warrior" | "explorer" | "merchant";
 
@@ -789,8 +789,13 @@ export const useClicker = create<ClickerState>((set, get) => ({
   startDungeon: (dungeonId) => {
     set((state) => {
       // Ищем данные о подземелье
-      const dungeon = expeditions.find(d => d.id === dungeonId);
-      if (!dungeon) return {};
+      const dungeon = dungeons.find(d => d.id === dungeonId);
+      if (!dungeon) {
+        console.error("Подземелье не найдено:", dungeonId);
+        return {};
+      }
+      
+      console.log("Запуск подземелья:", dungeon);
       
       return {
         currentDungeon: dungeon,

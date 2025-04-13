@@ -3,6 +3,9 @@ import { useClicker } from "../lib/stores/useClicker";
 import { useAudio } from "../lib/stores/useAudio";
 import { dungeons, monsters, getMonsterByLevel, relics } from "../lib/gameData";
 
+// Проверим подземелья
+console.log("Доступные подземелья:", dungeons);
+
 const Dungeon = () => {
   const { 
     dungeonsCleared, dungeonLevel, currentDungeon, 
