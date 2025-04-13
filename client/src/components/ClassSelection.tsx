@@ -5,15 +5,65 @@ import { useAudio } from "../lib/stores/useAudio";
 
 type ClassType = "warrior" | "explorer" | "merchant";
 
+// Информация о классах
+const classInfo = [
+  {
+    type: "warrior" as ClassType,
+    name: "Воин",
+    icon: "⚔️",
+    description: "Мастер силы и боевых искусств",
+    color: "bg-red-600 hover:bg-red-700",
+    bonuses: [
+      "+25% к силе клика",
+      "+10% к урону в подземельях",
+      "Начальный бонус: +5 к силе клика"
+    ]
+  },
+  {
+    type: "explorer" as ClassType,
+    name: "Исследователь",
+    icon: "🧭",
+    description: "Любознательный искатель приключений",
+    color: "bg-blue-600 hover:bg-blue-700",
+    bonuses: [
+      "-20% к времени экспедиций",
+      "+15% к награде за экспедиции",
+      "Начальный бонус: Открыта первая экспедиция"
+    ]
+  },
+  {
+    type: "merchant" as ClassType,
+    name: "Торговец",
+    icon: "💰",
+    description: "Опытный делец и коллекционер",
+    color: "bg-green-600 hover:bg-green-700",
+    bonuses: [
+      "+10% к шансу редких находок",
+      "-15% к ценам в магазине",
+      "Начальный бонус: +50 алмазов"
+    ]
+  }
+];
+
 const ClassSelection = () => {
   const { phase, start } = useGame();
   const { selectClass } = useClicker();
   const { playSuccess, toggleMute, isMuted } = useAudio();
+  const [currentClassIndex, setCurrentClassIndex] = useState(0);
   
   // Добавляем отладочный лог при монтировании компонента
   useEffect(() => {
     console.log("ClassSelection mounted, game phase:", phase);
   }, [phase]);
+  
+  // Функции для навигации по классам
+  const nextClass = () => {
+    setCurrentClassIndex((prevIndex) => (prevIndex + 1) % classInfo.length);
+  };
+  
+  const prevClass = () => {
+    setCurrentClassIndex((prevIndex) => (prevIndex - 1 + classInfo.length) % classInfo.length);
+  };
 
   // Функция для непосредственного выбора класса и начала игры
   const selectClassAndStartGame = (classType: ClassType) => {
@@ -60,108 +110,75 @@ const ClassSelection = () => {
         <div className="mb-6">
           <h2 className="text-xl font-semibold text-center mb-6">Выберите класс персонажа</h2>
           
-          {/* Класс: Воин */}
-          <div className="card p-4 mb-4 border-2 border-primary/20 hover:border-primary transition-all">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="text-3xl">⚔️</div>
-              <div>
-                <h3 className="font-bold">Воин</h3>
-                <p className="text-sm text-muted-foreground">Мастер силы и боевых искусств</p>
-              </div>
-            </div>
+          {/* Навигация между классами */}
+          <div className="flex justify-center items-center gap-4 mb-4">
+            <button 
+              className="p-3 rounded-full bg-muted hover:bg-muted-foreground/20 text-lg"
+              onClick={prevClass}
+              aria-label="Предыдущий класс"
+            >
+              ◀️
+            </button>
             
-            <div className="mb-4">
-              <p className="text-sm font-semibold mb-2">Бонусы:</p>
-              <ul className="text-sm space-y-1">
-                <li className="flex items-center gap-1">
-                  <span className="text-primary">•</span> +25% к силе клика
-                </li>
-                <li className="flex items-center gap-1">
-                  <span className="text-primary">•</span> +10% к урону в подземельях
-                </li>
-                <li className="flex items-center gap-1">
-                  <span className="text-primary">•</span> Начальный бонус: +5 к силе клика
-                </li>
-              </ul>
+            <div className="text-center font-medium">
+              {currentClassIndex + 1} / {classInfo.length}
             </div>
             
             <button 
-              onClick={() => selectClassAndStartGame("warrior")}
-              className="w-full py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-colors shadow-md"
+              className="p-3 rounded-full bg-muted hover:bg-muted-foreground/20 text-lg"
+              onClick={nextClass}
+              aria-label="Следующий класс"
             >
-              Выбрать Воина
+              ▶️
             </button>
           </div>
           
-          {/* Класс: Исследователь */}
-          <div className="card p-4 mb-4 border-2 border-primary/20 hover:border-primary transition-all">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="text-3xl">🧭</div>
+          {/* Текущий класс */}
+          <div className="card p-6 mb-4 border-2 border-primary/20 hover:border-primary transition-all">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="text-4xl">{classInfo[currentClassIndex].icon}</div>
               <div>
-                <h3 className="font-bold">Исследователь</h3>
-                <p className="text-sm text-muted-foreground">Любознательный искатель приключений</p>
+                <h3 className="font-bold text-xl">{classInfo[currentClassIndex].name}</h3>
+                <p className="text-muted-foreground">{classInfo[currentClassIndex].description}</p>
               </div>
             </div>
             
-            <div className="mb-4">
-              <p className="text-sm font-semibold mb-2">Бонусы:</p>
-              <ul className="text-sm space-y-1">
-                <li className="flex items-center gap-1">
-                  <span className="text-primary">•</span> -20% к времени экспедиций
-                </li>
-                <li className="flex items-center gap-1">
-                  <span className="text-primary">•</span> +15% к награде за экспедиции
-                </li>
-                <li className="flex items-center gap-1">
-                  <span className="text-primary">•</span> Начальный бонус: Открыта первая экспедиция
-                </li>
+            <div className="mb-5">
+              <p className="font-semibold mb-2">Бонусы:</p>
+              <ul className="space-y-2">
+                {classInfo[currentClassIndex].bonuses.map((bonus, index) => (
+                  <li key={index} className="flex items-center gap-2">
+                    <span className="text-primary">•</span> {bonus}
+                  </li>
+                ))}
               </ul>
             </div>
             
             <button 
-              onClick={() => selectClassAndStartGame("explorer")}
-              className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-md"
+              onClick={() => selectClassAndStartGame(classInfo[currentClassIndex].type)}
+              className={`w-full py-3 ${classInfo[currentClassIndex].color} text-white font-bold rounded-lg transition-colors shadow-md`}
             >
-              Выбрать Исследователя
+              Выбрать {classInfo[currentClassIndex].name}
             </button>
           </div>
           
-          {/* Класс: Торговец */}
-          <div className="card p-4 mb-4 border-2 border-primary/20 hover:border-primary transition-all">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="text-3xl">💰</div>
-              <div>
-                <h3 className="font-bold">Торговец</h3>
-                <p className="text-sm text-muted-foreground">Опытный делец и коллекционер</p>
-              </div>
-            </div>
-            
-            <div className="mb-4">
-              <p className="text-sm font-semibold mb-2">Бонусы:</p>
-              <ul className="text-sm space-y-1">
-                <li className="flex items-center gap-1">
-                  <span className="text-primary">•</span> +10% к шансу редких находок
-                </li>
-                <li className="flex items-center gap-1">
-                  <span className="text-primary">•</span> -15% к ценам в магазине
-                </li>
-                <li className="flex items-center gap-1">
-                  <span className="text-primary">•</span> Начальный бонус: +50 алмазов
-                </li>
-              </ul>
-            </div>
-            
-            <button 
-              onClick={() => selectClassAndStartGame("merchant")}
-              className="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition-colors shadow-md"
-            >
-              Выбрать Торговца
-            </button>
+          {/* Индикатор текущего класса */}
+          <div className="flex justify-center gap-2 mt-4">
+            {classInfo.map((_, index) => (
+              <button
+                key={index}
+                className={`w-3 h-3 rounded-full ${
+                  index === currentClassIndex ? "bg-primary" : "bg-muted"
+                }`}
+                onClick={() => setCurrentClassIndex(index)}
+                aria-label={`Перейти к классу ${index + 1}`}
+              />
+            ))}
           </div>
         </div>
 
         <p className="text-center text-sm text-muted-foreground mt-4">
-          Выберите класс персонажа, нажав на одну из кнопок выше
+          Листайте для просмотра других классов ◀️ ▶️
         </p>
       </div>
     </div>
