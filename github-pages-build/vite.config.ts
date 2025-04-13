@@ -5,14 +5,14 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/Mb/", // Путь к репозиторию на GitHub Pages
+  base: "/Mb/",
   build: {
     outDir: "dist",
     emptyOutDir: true,
   },
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "src"),
+      "@": path.resolve(__dirname, "./client/src"),
     },
   },
   assetsInclude: ["**/*.gltf", "**/*.glb", "**/*.mp3", "**/*.ogg", "**/*.wav"],
