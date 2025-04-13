@@ -17,27 +17,21 @@ export const useGame = create<GameState>()(
     phase: "ready",
     
     start: () => {
-      set((state) => {
-        // Only transition from ready to playing
-        if (state.phase === "ready") {
-          return { phase: "playing" };
-        }
-        return {};
+      console.log("Вызвана функция start() в useGame");
+      set(() => {
+        console.log("Переключение фазы игры на playing");
+        return { phase: "playing" };
       });
     },
     
     restart: () => {
+      console.log("Вызвана функция restart() в useGame");
       set(() => ({ phase: "ready" }));
     },
     
     end: () => {
-      set((state) => {
-        // Only transition from playing to ended
-        if (state.phase === "playing") {
-          return { phase: "ended" };
-        }
-        return {};
-      });
+      console.log("Вызвана функция end() в useGame");
+      set(() => ({ phase: "ended" }));
     }
   }))
 );

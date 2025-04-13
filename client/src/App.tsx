@@ -63,18 +63,21 @@ function App() {
     };
   }, []);
   
+  // Логирование статуса игры
+  console.log("App render - Game phase:", phase, "Class selected:", hasSelectedClass);
+
   // Рендерим интерфейс в зависимости от состояния игры
   return (
     <div className="page-container bg-background text-foreground">
       <GameAudio />
       
       {/* Экран выбора класса */}
-      {!hasSelectedClass && phase === "ready" && (
+      {(!hasSelectedClass || phase === "ready") && (
         <ClassSelection />
       )}
       
       {/* Основной игровой интерфейс */}
-      {hasSelectedClass && (
+      {hasSelectedClass && phase === "playing" && (
         <>
           <Header />
           
