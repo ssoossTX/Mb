@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Великий Кликер</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="game">
+        <div id="header">
+            <h1>Великий Кликер</h1>
+            <div id="stats">
+                <span id="gold">💰 0</span>
+                <span id="level">📊 Уровень: 1</span>
+            </div>
+        </div>
+        
+        <div id="main-area">
+            <div id="class-selection" class="section">
+                <h2>Выберите класс</h2>
+                <button class="class-btn" data-class="warrior">⚔️ Воин</button>
+                <button class="class-btn" data-class="explorer">🗺️ Исследователь</button>
+                <button class="class-btn" data-class="merchant">💰 Торговец</button>
+            </div>
+
+            <div id="clicker-area" class="section hidden">
+                <button id="click-btn">🗡️ Клик!</button>
+            </div>
+
+            <div id="dungeons" class="section hidden">
+                <h2>Подземелья</h2>
+                <div id="dungeon-list"></div>
+            </div>
+        </div>
+
+        <div id="upgrades" class="section hidden">
+            <h2>Улучшения</h2>
+            <div id="upgrade-list"></div>
+        </div>
+    </div>
+    <script src="js/game.js"></script>
+</body>
+</html>
