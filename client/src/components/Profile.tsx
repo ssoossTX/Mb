@@ -134,18 +134,30 @@ const Profile = () => {
           </div>
           
           {/* Сброс игры */}
-          <div className="card">
-            <h3 className="font-semibold mb-3 text-secondary">Опасная зона</h3>
+          <div className="card border-2 border-red-500 bg-red-50 dark:bg-red-950/20">
+            <h3 className="font-semibold mb-3 text-red-600 flex items-center gap-2">
+              <span>⚠️</span> 
+              <span>Опасная зона</span>
+            </h3>
             <button
               onClick={handleResetGame}
-              className="button w-full bg-secondary text-white hover:bg-secondary-foreground"
+              className={`button w-full ${
+                showResetConfirm 
+                  ? "bg-red-600 hover:bg-red-700" 
+                  : "bg-red-500 hover:bg-red-600"
+              } text-white py-3 font-bold`}
             >
-              {showResetConfirm ? "Подтвердить сброс игры" : "Сбросить игру"}
+              {showResetConfirm ? "⚠️ ПОДТВЕРДИТЬ СБРОС ИГРЫ ⚠️" : "🔄 СБРОСИТЬ ИГРУ"}
             </button>
             {showResetConfirm && (
-              <p className="text-xs text-secondary mt-2 text-center">
-                Внимание! Все данные игры будут удалены. Это действие нельзя отменить.
-              </p>
+              <div className="mt-3 p-2 bg-red-100 dark:bg-red-900/20 rounded-md border border-red-400">
+                <p className="text-red-600 font-medium text-center">
+                  ВНИМАНИЕ! Все данные игры будут удалены.
+                </p>
+                <p className="text-xs text-red-500 mt-1 text-center">
+                  Это действие невозможно отменить!
+                </p>
+              </div>
             )}
           </div>
         </div>

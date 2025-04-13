@@ -253,13 +253,13 @@ const Dungeon = () => {
               <button
                 onClick={attackMonster}
                 disabled={monsterHealth <= 0 || playerHealth <= 0}
-                className={`button w-full ${
+                className={`button w-full font-bold text-lg py-3 ${
                   monsterHealth > 0 && playerHealth > 0
-                    ? "button-primary"
+                    ? "bg-red-600 hover:bg-red-700 text-white"
                     : "button-outline opacity-50"
                 }`}
               >
-                Атаковать
+                🗡️ АТАКОВАТЬ 🗡️
               </button>
             </div>
           )}
@@ -327,9 +327,11 @@ const Dungeon = () => {
                           startDungeon(dungeon.id);
                           console.log("currentDungeon после startDungeon:", useClicker.getState().currentDungeon);
                         }}
-                        className="button button-primary w-full mt-2"
+                        className="button w-full mt-2 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 flex items-center justify-center gap-2"
                       >
-                        Войти в подземелье
+                        <span>{dungeon.icon}</span>
+                        <span>Войти в подземелье</span>
+                        <span>⚔️</span>
                       </button>
                     )}
                   </div>
