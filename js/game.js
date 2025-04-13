@@ -3,6 +3,9 @@ class Game {
     constructor() {
         this.gold = 0;
         this.level = 1;
+        this.tg = window.Telegram.WebApp;
+        this.tg.ready();
+        this.tg.expand();
         this.selectedClass = null;
         this.clickPower = 1;
         this.initializeUI();
