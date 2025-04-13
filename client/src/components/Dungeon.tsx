@@ -296,40 +296,48 @@ const Dungeon = () => {
                     }
                   }}
                 >
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-lg">{dungeon.icon}</span>
-                        <h4 className="font-medium">{dungeon.name}</h4>
-                      </div>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        {dungeon.description}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-xs">
-                        Сложность: <span className="font-medium">{dungeon.difficulty}</span>
-                      </div>
-                      {dungeon.minClearedDungeons > dungeonsCleared && (
-                        <div className="text-xs text-secondary">
-                          Требуется: {dungeon.minClearedDungeons} подземелий
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg">{dungeon.icon}</span>
+                          <h4 className="font-medium">{dungeon.name}</h4>
                         </div>
-                      )}
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {dungeon.description}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-xs">
+                          Сложность: <span className="font-medium">{dungeon.difficulty}</span>
+                        </div>
+                        {dungeon.minClearedDungeons > dungeonsCleared && (
+                          <div className="text-xs text-secondary">
+                            Требуется: {dungeon.minClearedDungeons} подземелий
+                          </div>
+                        )}
+                      </div>
                     </div>
+                    
+                    {dungeon.minClearedDungeons <= dungeonsCleared && (
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          console.log("Входим в подземелье:", dungeon.id, dungeon.name);
+                          startDungeon(dungeon.id);
+                          console.log("currentDungeon после startDungeon:", useClicker.getState().currentDungeon);
+                        }}
+                        className="button button-primary w-full mt-2"
+                      >
+                        Войти в подземелье
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
             </div>
             
-            {/* Кнопка запуска подземелья */}
-            {selectedDungeon && (
-              <button
-                onClick={handleStartDungeon}
-                className="button button-primary w-full mt-4"
-              >
-                Войти в подземелье
-              </button>
-            )}
+            {/* Сохраняем возможность выбора через handleSelectDungeon для будущего расширения функционала */}
           </div>
         </div>
       )}
